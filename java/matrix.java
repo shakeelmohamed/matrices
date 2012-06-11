@@ -1,3 +1,14 @@
+/*To add:
+ * mult w/ vector class
+ * determinant
+ * rref
+ * ref
+ * inverse
+ * get row/column by index
+ * isInNullSpace/colSpace
+ * are columns Linerally independent?
+ * */
+
 public class matrix {
 	private double[][] matrix;
 	private int r;
@@ -91,15 +102,21 @@ public class matrix {
 		}
 	}
 	public matrix identityMatrix() {
+		matrix ret;
 		if(this.isSquare()){
-			matrix ret = new matrix(this.r, this.c);
+			ret = new matrix(this.r, this.c);
 			for(int i=0; i<ret.r; i++)
 				ret.matrix[i][i] = 1;
+			ret.c = this.c;
+			ret.r = this.r;
 			return ret;
 		}
 		else{
 			System.out.println("Invalid dimensions!");
-			return new matrix(0,0);
+			ret = new matrix(0,0);
+			ret.c = 0;
+			ret.r = 0;
+			return ret;
 		}
 	}
 	public double[][] getMatrixEntries(){
@@ -110,5 +127,36 @@ public class matrix {
 	}
 	public double getColumnCount(){
 		return this.c;
+	}
+	public matrix getTranspose(){
+		if(this.c < 1 || this.r < 1){
+			System.out.println("Invalid number of rows and/or columns.");
+			return new matrix(0,0);
+		}
+		else{
+			matrix ret = new matrix(this.c, this.r);
+			for(int i=0; i<this.r; i++){
+				for(int j=0; j<this.c; j++){
+					ret.matrix[j][i] = this.matrix[i][j];
+				}
+			}
+			return ret;
+		}
+	}
+	public double euclideanInnerProduct(matrix n){ 
+		//This is like the dot product with vectors, multiply corresponding components and sum up those products.
+		if(this.isSameDimension(n)){
+			double val = 0.0;
+			for(int i=0; i<this.r; i++){
+				for(int j=0; j<this.c; j++){
+					val += (this.matrix[i][j]*n.matrix[i][j]);
+				}
+			}
+			return val;
+		}
+		else{
+			System.out.println("Invalid dimensions.");
+			return 0.0;
+		}			
 	}
 }
