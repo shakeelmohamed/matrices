@@ -1,5 +1,4 @@
 /*To add:
- * mult w/ vector class
  * determinant
  * rref
  * ref
